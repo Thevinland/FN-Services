@@ -1266,6 +1266,69 @@ body.dark-mode #about .about-image img {
  }
   
 }
+/* Ajustements pour les tablettes */
+@media (max-width: 1024px) {
+    .gallery-container {
+        height: 50vh; /* Réduit encore la hauteur */
+    }
+
+    .gallery-item {
+        width: calc(40% - 15px); /* Taille réduite pour les items */
+        height: 85%; /* Réduit la hauteur des items */
+    }
+
+    .gallery-item img {
+        height: 65%; /* Ajuste la taille de l'image */
+    }
+}
+
+/* Ajustements pour les petits écrans (mobiles) */
+@media (max-width: 768px) {
+    .gallery-container {
+        height: 40vh; /* Réduit la hauteur pour mobiles */
+    }
+
+    .gallery-item {
+        width: calc(50% - 10px); /* Agrandit légèrement les items */
+        height: 80%; /* Réduit encore la hauteur */
+        margin: 0 5px;
+    }
+
+    .gallery-item img {
+        height: 60%; /* Ajuste la hauteur de l'image */
+    }
+
+    .text-container {
+        padding: 8px;
+        font-size: 0.8em; /* Réduit la taille du texte */
+    }
+}
+
+/* Ajustements pour les très petits écrans (mobiles < 480px) */
+@media (max-width: 480px) {
+    .gallery-container {
+        height: 30vh; /* Hauteur maximale très réduite */
+    }
+
+    .gallery-item {
+        width: calc(60% - 10px); /* Items beaucoup plus petits */
+        height: 75%; /* Réduit encore la hauteur des items */
+        margin: 0 5px;
+    }
+
+    .gallery-item img {
+        height: 55%; /* Réduction de l'image */
+    }
+
+    .text-container h3 {
+        font-size: 0.9em; /* Taille de texte plus petite */
+    }
+
+    .text-container p {
+        font-size: 0.75em; /* Taille de paragraphe réduite */
+    }
+}
+
 
 
 
