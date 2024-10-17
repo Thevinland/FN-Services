@@ -1269,64 +1269,55 @@ body.dark-mode #about .about-image img {
 /* Ajustements pour les tablettes */
 @media (max-width: 1024px) {
     .gallery-container {
-        height: 50vh; /* Réduit la hauteur */
+        height: 50vh;
     }
-
     .gallery-item {
-        width: calc(30% - 10px); /* Réduit la largeur des items */
-        height: 80%; /* Ajuste la hauteur */
-        margin: 0 5px; /* Ajout d'une marge uniforme pour éviter le dépassement */
+        width: calc(25% - 10px); /* Réduit de 30% à 25% */
+        height: 80%;
+        margin: 0 5px;
     }
-
     .gallery-item img {
-        height: 60%; /* Ajuste la hauteur de l'image */
+        height: 60%;
     }
 }
 
 /* Ajustements pour les petits écrans (mobiles) */
 @media (max-width: 768px) {
     .gallery-container {
-        height: 40vh; /* Hauteur réduite pour petits écrans */
+        height: 40vh;
     }
-
     .gallery-item {
-        width: calc(40% - 10px); /* Réduction de la largeur */
+        width: calc(33.33% - 10px); /* Réduit de 40% à 33.33% */
         height: 75%; 
-        margin: 0 5px; /* Marges uniformes */
+        margin: 0 5px;
     }
-
     .gallery-item img {
-        height: 55%; /* Ajuste la hauteur de l'image */
+        height: 55%;
     }
-
     .text-container {
         padding: 8px;
-        font-size: 0.8em; /* Réduction de la taille du texte pour mobile */
+        font-size: 0.8em;
     }
 }
 
 /* Ajustements pour les très petits écrans (mobiles < 480px) */
 @media (max-width: 480px) {
     .gallery-container {
-        height: 30vh; /* Hauteur minimale */
+        height: 30vh;
     }
-
     .gallery-item {
-        width: calc(48% - 5px); /* Largeur plus petite pour éviter les débordements */
+        width: calc(40% - 5px); /* Réduit de 48% à 40% */
         height: 70%;
-        margin: 0 3px; /* Réduction des marges */
+        margin: 0 3px;
     }
-
     .gallery-item img {
-        height: 50%; /* Hauteur de l'image ajustée */
+        height: 50%;
     }
-
     .text-container h3 {
-        font-size: 0.9em; /* Texte réduit */
+        font-size: 0.9em;
     }
-
     .text-container p {
-        font-size: 0.75em; /* Paragraphe ajusté */
+        font-size: 0.75em;
     }
 }
 
