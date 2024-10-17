@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.0.1/model-viewer.min.js"></script>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>FN-Services - Développement Web Professionnel</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+      <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" ></script>
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+      <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap');
+      
+        :root {
+          --primary-color: #3498db;
+          --secondary-color: #2c3e50;
+          --accent-color: #e74c3c;
+          --text-color: #ecf0f1;
+          --background-color: #f4f4f4;
+        }
+      
+        body {
+          font-family: 'Poppins', sans-serif;
+          line-height: 1.6;
+          color: #333;
+          margin: 0;
+          padding: 0;
+          background-color: #f4f4f4;
+          font-size: 16px; /* Base font size */
+        }
+      /* Mode sombre */
+  body.dark-mode {
+      background-color: black;
+      color: white;
+  }
+        .nav-container {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          z-index: 1000;
+          transition: background 0.5s ease, box-shadow 0.5s ease;
+          background-color: rgba(44, 62, 80, 0.9);
+        }
+      
+        .nav-container.scrolled {
+          background-color: rgba(44, 62, 80, 0.9);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+      
+        nav {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 1rem 5%; /* Updated padding */
+          max-width: 1200px;
+          margin: 0 auto;
+          transition: padding 0.3s ease;
+        }
+      
+        .logo {
+          font-size: 1.5rem; /* Updated font size */
+          font-weight: bold;
+          color: var(--primary-color);
+          text-decoration: none;
+          transition: color 0.3s ease;
+        }
+      
+        .nav-links {
+          display: flex;
+          gap: 2rem;
+          list-style-type: none;
+        }
+      
+        .nav-links a {
+          color: #ecf0f1;
+          text-decoration: none;
+          font-weight: 600;
+          position: relative;
+          padding: 0.5rem 0;
+          transition: color 0.3s ease, transform 0.3s ease;
+          display: flex;
+          align-items: center;
+          font-size: 1rem; /* Updated font size */
+        }
+      
+        .nav-links a:hover {
+          color: #3498db;
+          transform: translateY(-3px);
+        }
+      
+        .nav-links a::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background-color: var(--primary-color);
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform 0.4s ease;
+        }
+      
+        .nav-links a:hover::after {
+          transform: scaleX(1);
+        }
+      
+        .nav-links a i {
+          margin-right: 0.5rem;
+          font-size: 1.2rem;
+          transition: transform 0.4s ease;
+        }
+      
+        .nav-links a:hover i {
+          transform: translateY(-3px);
+        }
+      
+  
+  /* Initialisation du menu burger */
+  .burger {
+    display: none;
+    cursor: pointer;
+    z-index: 2000;
+  }
+  
+  .burger div {
+    width: 30px;
+    height: 3px;
+    background-color: var(--text-color);
+    margin: 5px;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+  
+  /* Effet de croix lorsque le burger est activé */
+  .burger.toggle .line1 {
+    transform: rotate(-45deg) translate(-5px, 6px);
+  }
+  
+  .burger.toggle .line2 {
+    opacity: 0;
+  }
+  
+  .burger.toggle .line3 {
+    transform: rotate(45deg) translate(-5px, -6px);
+  }
+  
+  /* Menu initial */
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style-type: none;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+  }
+  
+  .nav-links.nav-active {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  
+      /* Media Queries pour adapter le menu burger à toutes les tailles d’écran */
+  @media screen and (max-width: 1024px) {
+    .burger {
+      display: block;
+    }
+  
+    .nav-links {
+      position: fixed;
+      right: 0;
+      top: 0;
+      height: 100%;
+      background-color: rgba(44, 62, 80, 0.95);
+      flex-direction: column;
+      align-items: center;
+      width: 50%;
+      transform: translateX(100%);
+      opacity: 0;
+      transition: transform 0.5s ease, opacity 0.5s ease;
+    }
+  
+    .nav-links.nav-active {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .nav-links {
+      width: 70%;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .burger div {
+      width: 20px;
+      height: 2px;
+    }
+  
+    .nav-links {
+      width: 100%;
+    }
+  }
+  
+  /* Animation des liens */
+  .nav-links li {
+    opacity: 1;
+  }
+  
+  .nav-links.nav-active li {
+    opacity: 1;
+    transition: opacity 0.3s ease-in 0.3s;
+  }
+  
+  @keyframes navLinkFade {
+    from {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+
+    
+    
+    
+       
+      
+      
+        main {
+          max-width: 1200px;
+          margin: 2rem auto;
+          padding: 0 1rem;
+        }
+      
+        .section {
+          background-color: #ffffff;
+          border-radius: 15px;
+          padding: 5% 3%; /* Updated padding */
+          margin-bottom: 3rem;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+          opacity: 0; /* Ajout d'opacité pour l'animation */
+          transform: translateY(20px); /* Positionnement vers le bas pour l'animation */
+          transition: opacity 0.5s ease, transform 0.5s ease; /* Transition pour l'animation */
+       
+        }
+  
+        .section.visible {
+          opacity: 1; /* Devenir visible */
+          transform: translateY(0); /* Remonter à sa position d'origine */
+        }
+  
+        h1, h2 {
+          color: #2c3e50;
+        }
+  
+        h2 {
+          border-bottom: 2px solid #3498db;
+          padding-bottom: 10px;
+          margin-bottom: 20px;
+        }
+      
+        footer {
+          background-color: #2c3e50;
+          color: #ecf0f1;
+          text-align: center;
+          padding: 2rem;
+          margin-top: 2rem;
+        }
+      
+        @keyframes fadeInDown {
+          from { opacity: 0; transform: translateY(-20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      
+        @keyframes pulse {
+          0% { transform: scale(1); }
+          50% { transform: scale(1.05); }
+          100% { transform: scale(1); }
+        }
+      
+       
+  
+       
+      
+        .theme-toggle {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          background-color: var(--primary-color);
+          color: #fff;
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+          z-index: 1000;
+        }
+      
+        .theme-toggle:hover {
+          transform: scale(1.1);
+        }
+      
+        .theme-toggle i {
+          font-size: 1.5rem;
+        }
+      
+        body.dark-mode {
+          --primary-color: #3498db;
+          --secondary-color: #ecf0f1;
+          --accent-color: #e74c3c;
+          --text-color: #2c3e50;
+          --background-color: #34495e;
+        }
+      
+        body.dark-mode .nav-container.scrolled {
+          background-color: rgba(236, 240, 241, 0.9);
+        }
+      
+        body.dark-mode .nav-links a {
+          color: var(--secondary-color);
+        }
+      
+        body.dark-mode .section {
+          background-color: #2c3e50;
+          color: #ecf0f1;
+        }
+      
+        body.dark-mode h1, body.dark-mode h2 {
+          color: #ecf0f1;
+        }
+      
+       
+     
+        /*bouton sombre clair code */
+        .theme-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px;
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #333;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px); /* effet de flou pour un look premium */
+  }
+  
+  .theme-button:hover {
+    background-color: rgba(240, 240, 240, 1);
+    box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Icône plus minimaliste */
+  .theme-button i {
+    font-size: 18px;
+  }
+  
+  /* Styles du mode sombre */
+  body.dark-mode {
+        --primary-color: #3498db;
+        --secondary-color: #ecf0f1;
+        --accent-color: #e74c3c;
+        --text-color: #2c3e50;
+        --background-color: #34495e;
+      }
+    
+  body.dark-mode .theme-button {
+    background-color: rgba(50, 50, 50, 0.8);
+    color: #fff;
+  }
+
+  body.dark-mode .contact-form{
+    background-color: #34495e;
+    color: #ecf0f1;
+  }
+
+  body.dark-mode .contact-info{
+    background-color: #34495e;
+    color: #ecf0f1;
+  }
+
+  
+
+  
+
+  
+
+  
+ 
+  
+ 
+
+ 
+ 
+  /* Animation pulse ajustée pour le mode sombre */
+  @keyframes pulse-dark {
+    0% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.5;
+    }
+  }
+  /*media query consernant l'objet 3D*/
+
+   
+  .container {
+            width: 88%;
+            max-width: 1200px;
+            margin-right: 10%;
+            padding: 0;
+            box-sizing: border-box;
+
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: #ffffff;
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        header h1 {
+            margin: 0;
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            text-align: center;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .hero-section {
+            position: relative;
+            margin-top: 106px;
+            height: 80vh;
+            min-height: 300px;
+            max-height: 800px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            text-align: center;
+            overflow: hidden;
+            width: 100vw;
+            box-sizing: border-box;
+            margin-left: -30px;
+            margin-right: 0;
+           
+            
+         
+           
+           
+            
+            
+        }
+        
+        .hero-image {
+          
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            margin-left: 0;
+            margin-right: 0;
+           
+        }
+        
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            padding: 2rem;
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        .hero-content h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero-content p {
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            max-width: 700px;
+            margin: 0 auto;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .content-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 4rem;
+            gap: 2rem;
+        }
+        
+        .contact-form, .map-container {
+            flex: 1 1 300px;
+        }
+
+       
+        .contact-form {
+            background: #ffffff;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .contact-form h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #e1e1e1;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+        
+        .contact-form input:focus, .contact-form textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+            outline: none;
+        }
+        
+        .contact-form button {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .contact-form button:hover {
+            background: #3a7bc8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .map-container {
+            height: 450px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding-left: 10%;
+            left:150px;
+            padding-bottom : 20%;
+        }
+        
+        @media (max-width: 768px) {
+            .content-wrapper {
+                flex-direction: column;
+            }
+            .contact-form, .map-container {
+                width: 100%;
+            }
+            .hero-section {
+                height: 60vh;
+            }
+            .map-container {
+                height: 300px;
+                left: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-section {
+                height: 50vh;
+                margin-left: -20px;
+                
+            }
+            .contact-form {
+                padding: 1.5rem;
+            }
+            .map-container {
+              width : 105%;
+              left : 0;
+            }
+
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .contact-form, .map-container, .hero-content {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .contact-form {
+            animation-delay: 0.2s;
+        }
+
+        .map-container {
+            animation-delay: 0.4s;
+        }
+
+        .hero-content {
+            animation-delay: 0.6s;
+        }
+        /* phone number */
+        .contact-info {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+        }
+        
+        .contact-info h3 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .phone-numbers {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        
+        .phone-number {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 1.5rem;
+            background: var(--bg-color);
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .phone-number:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        .phone-number img {
+            width: 32px;
+            height: 32px;
+            margin-right: 12px;
+            border-radius: 50%;
+            object-fit: cover;
+            background-color: #fff;
+            padding: 4px;
+        }
+        
+        .phone-number span {
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+        
+      </style>
+</head>
+<body>
+    <div class="nav-container">
+        <nav>
+          <a href="#" class="logo">FN-Services</a>
+          <ul class="nav-links">
+            <li><a href="index.html"><i class="fas fa-home"></i> Accueil</a></li>
+            <li><a href="index.html#about"><i class="fas fa-info-circle"></i> À propos</a></li>
+            <li><a href="index.html#services"><i class="fas fa-cogs"></i> Services</a></li>
+            <li><a href="index.html#portfolio"><i class="fas fa-briefcase"></i> Portfolio</a></li>
+            <li><a href="index.html#team"><i class="fas fa-users"></i> Équipe</a></li>
+            <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+          </ul>
+          <div class="burger">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+          </div>
+        </nav>
+      </div>
+      <main>
+
+        <section class="hero-section">
+          <img src="contact information.webp" alt="Image de fond représentant un bureau moderne avec une vue panoramique sur la ville" class="hero-image">
+          <div class="hero-overlay"></div>
+          <div class="hero-content">
+              <h2>Transformons vos idées en réalité</h2>
+              <p>Notre équipe est à votre écoute pour vous accompagner dans tous vos projets. Contactez-nous dès aujourd'hui pour donner vie à vos ambitions.</p>
+          </div>
+       </section>
+  
+      <div class="container">
+          <div class="content-wrapper">
+              <div class="contact-form">
+                  <h2>Envoyez-nous un message</h2>
+                  <form id="contactForm">
+                      <input type="text" name="name" placeholder="Votre nom" required>
+                      <input type="email" name="email" placeholder="Votre email" required>
+                      <textarea name="message" placeholder="Votre message" required rows="5"></textarea>
+                      <button type="submit">Envoyer sur WhatsApp</button>
+                  </form>
+              </div>
+  
+              <div class="map-container" id="map"></div>
+          </div>
+      </div>
+  
+      <div class="contact-info">
+        <h3>Nos coordonnées téléphoniques</h3>
+        <div class="phone-numbers">
+            <div class="phone-number">
+                <img src="mtn-logo.png" alt="Logo MTN" width="24" height="24">
+                <span>+242 068979747</span>
+            </div>
+            <div class="phone-number">
+                <img src="mtn-logo.png" alt="Logo MTN" width="24" height="24">
+                <span>+242 068153599</span>
+            </div>
+        </div>
+    </div>
+
+    <button id="theme-toggle" class="theme-button">
+      <i class="fas fa-moon"></i> <!-- Icône pour le mode sombre -->
+    </button>
+</main>
+
+      
+  
+    
+
+     
+  </body>
+
+      <footer>
+        <p>&copy; 2023 FN-Services. Tous droits réservés.</p>
+      </footer>
+
+      <script>
+        function handleIntersection(entries, observer) {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+            }
+          });
+        }
+      
+        const observer = new IntersectionObserver(handleIntersection, { threshold: 0.1 });
+      
+        document.querySelectorAll('.section').forEach(section => {
+          observer.observe(section);
+        });
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+              behavior: 'smooth'
+            });
+          });
+        });
+      </script>
+      <script src="bouton mode .js"></script>
+     
+      <script>
+        const burger = document.querySelector('.burger');
+const navLinks = document.querySelector('.nav-links');
+const navItems = document.querySelectorAll('.nav-links li');
+
+burger.addEventListener('click', () => {
+  navLinks.classList.toggle('nav-active');
+  burger.classList.toggle('toggle');
+
+  navItems.forEach((item, index) => {
+    item.style.animation = item.style.animation
+      ? ''
+      : `navLinkFade 0.5s ease forwards ${(index / 7 + 0.3)}s`;
+  });
+});
+      </script>
+      <script>
+        const galleryContainer = document.querySelector('.gallery-container');
+const gallery = document.querySelector('.gallery');
+const items = document.querySelectorAll('.gallery-item');
+const indicators = document.querySelectorAll('.indicator');
+let isMouseOver = false;
+let currentIndex = 0;
+
+function updateGallery(index) {
+    const containerWidth = galleryContainer.clientWidth;
+    const itemWidth = items[0].offsetWidth;
+    const offset = -(index * itemWidth) + (containerWidth / 2) - (itemWidth / 2);
+    gallery.style.transform = `translateX(${offset}px)`;
+    
+    items.forEach((item, i) => {
+        item.classList.toggle('active', i === index);
+        const distance = Math.abs(i - index);
+        const scale = distance === 0 ? 1.05 : 0.8;
+        const zIndex = distance === 0 ? 10 : 1;
+        const opacity = distance === 0 ? 1 : 0.7;
+        item.style.transform = `scale(${scale}) translateZ(${distance === 0 ? 50 : -50}px)`;
+        item.style.zIndex = zIndex;
+        item.style.opacity = opacity;
+    });
+
+    indicators.forEach((ind, i) => {
+        ind.classList.toggle('active', i === index);
+    });
+}
+
+function handleMouseMove(e) {
+    if (!isMouseOver) return;
+    
+    const containerRect = galleryContainer.getBoundingClientRect();
+    const mouseX = e.clientX - containerRect.left;
+    const containerWidth = containerRect.width;
+    
+    const scrollPercentage = mouseX / containerWidth;
+    const maxIndex = indicators.length - 1;
+    currentIndex = Math.round(scrollPercentage * maxIndex);
+    
+    updateGallery(currentIndex);
+}
+
+galleryContainer.addEventListener('mousemove', handleMouseMove);
+galleryContainer.addEventListener('mouseenter', () => isMouseOver = true);
+galleryContainer.addEventListener('mouseleave', () => isMouseOver = false);
+
+indicators.forEach((indicator, index) => {
+    indicator.addEventListener('click', () => {
+        currentIndex = index;
+        updateGallery(currentIndex);
+    });
+});
+
+// Initial update
+updateGallery(currentIndex);
+
+// Touch events for mobile
+let touchStartX = 0;
+let touchEndX = 0;
+
+galleryContainer.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+});
+
+galleryContainer.addEventListener('touchmove', (e) => {
+    touchEndX = e.touches[0].clientX;
+    const diffX = touchStartX - touchEndX;
+    if (Math.abs(diffX) > 50) {
+        if (diffX > 0 && currentIndex < indicators.length - 1) {
+            currentIndex++;
+        } else if (diffX < 0 && currentIndex > 0) {
+            currentIndex--;
+        }
+        updateGallery(currentIndex);
+        touchStartX = touchEndX;
+    }
+});
+
+// Prevent default touch behavior
+galleryContainer.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+}, { passive: false });
+    </script>
+
+<script>
+  // Initialiser la carte
+  var map = L.map('map').setView([-4.7568, 11.8574], 14);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+var marker = L.marker([-4.7568, 11.8574]).addTo(map)
+    .bindPopup('Notre entreprise à Loandjili, Pointe-Noire')
+    .openPopup();
+
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = this.name.value;
+    const email = this.email.value;
+    const message = this.message.value;
+    const whatsappNumber = '242068979747';
+    const whatsappMessage = `Nom: ${name}%0AEmail: ${email}%0AMessage: ${message}`;
+    window.open(`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`, '_blank');
+});
+
+// Fonction pour ajuster la carte lors du redimensionnement de la fenêtre
+function resizeMap() {
+    if (map) {
+        map.invalidateSize();
+    }
+}
+
+// Écouter l'événement de redimensionnement de la fenêtre
+window.addEventListener('resize', resizeMap);
+
+// Appeler resizeMap une fois au chargement de la page
+window.addEventListener('load', resizeMap);
+</script>
+
+</body>
+</html>
