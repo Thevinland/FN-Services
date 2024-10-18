@@ -4,7 +4,7 @@
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>FN-Services - Développement Web Professionnel</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap');
+     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap');
     
       :root {
         --primary-color: #3498db;
@@ -628,6 +628,7 @@ body.dark-mode {
         object-fit: cover;
         border: 5px solid #3498db;
         margin: 0; /* Supprime toutes les marges autour de l'image */
+        padding-left: 0;
       }
 
       .team-member h3 {
@@ -670,6 +671,7 @@ body.dark-mode {
         width: 100%;
         height: 100%;
         transition: transform 0.3s ease;
+        padding-left: 0px;
       }
     
       .portfolio-item:hover img {
@@ -984,7 +986,7 @@ body.dark-mode {
     max-width: 1200px; /* Limite la largeur maximale à 600px */
     height: 250px; /* Réduit la hauteur à 300px */
     margin: 0 auto; /* Centre toujours le modèle */
-    border-color: red;
+    
     
     
   
@@ -1269,60 +1271,77 @@ body.dark-mode #about .about-image img {
 /* Ajustements pour les tablettes */
 @media (max-width: 1024px) {
     .gallery-container {
-        height: 50vh;
+        height: 50vh; /* Réduit la hauteur */
+        padding: 0 5px;
     }
+
     .gallery-item {
-        width: calc(20% - 10px); /* Réduit à 20% */
-        height: 80%;
-        margin: 0 5px;
+        width: calc(30% - 10px); /* Réduit la largeur des items */
+        height: 80%; /* Ajuste la hauteur */
+        margin: 0 5px; /* Ajout d'une marge uniforme pour éviter le dépassement */
     }
+
     .gallery-item img {
-        height: 60%;
-        
+        height: 60%; /* Ajuste la hauteur de l'image */
+        padding-left: 0px;
     }
 }
 
 /* Ajustements pour les petits écrans (mobiles) */
 @media (max-width: 768px) {
     .gallery-container {
-        height: 40vh;
+        height: 40vh; /* Hauteur réduite pour petits écrans */
+        padding: 0 5px;
     }
+
     .gallery-item {
-        width: calc(25% - 10px); /* Réduit à 25% */
+        width: calc(40% - 10px); /* Réduction de la largeur */
         height: 75%; 
-        margin: 0 5px;
+        margin: 0 5px; /* Marges uniformes */
     }
+
     .gallery-item img {
-        height: 55%;
+        height: 55%; /* Ajuste la hauteur de l'image */
+        padding-left: 0px;
     }
+
     .text-container {
         padding: 8px;
-        font-size: 0.8em;
+        font-size: 0.8em; /* Réduction de la taille du texte pour mobile */
     }
 }
 
 /* Ajustements pour les très petits écrans (mobiles < 480px) */
 @media (max-width: 480px) {
     .gallery-container {
-        height: 30vh;
+        height: 30vh; /* Hauteur minimale */
+        padding: 0 5px;
     }
+
     .gallery-item {
-        width: calc(33.33% - 5px); /* Réduit à 33.33% */
+        width: calc(48% - 5px); /* Largeur plus petite pour éviter les débordements */
         height: 70%;
-        margin: 0 3px;
+        margin: 0 3px; /* Réduction des marges */
     }
+
     .gallery-item img {
-        height: 50%;
-        margin-left :-40%;
-        
+        height: 50%; /* Hauteur de l'image ajustée */
+        padding-left:0px;
     }
+
     .text-container h3 {
-        font-size: 0.9em;
+        font-size: 0.9em; /* Texte réduit */
     }
+
     .text-container p {
-        font-size: 0.75em;
+        font-size: 0.75em; /* Paragraphe ajusté */
     }
 }
+
+
+
+
+
 
 
 
