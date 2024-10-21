@@ -242,7 +242,7 @@ to {
       }
   
       .portfolio-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: repeat(auto-fit, 1fr);
       }
       img {
         padding-left: 8%;
@@ -314,6 +314,9 @@ to {
   
       .section {
         padding: 1.5rem;
+      }
+      .portfolio-grid {
+        grid-template-columns: 1fr;
       }
     }
   
@@ -650,62 +653,67 @@ to {
     }
 
     .portfolio-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-}
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 2rem;
+    }
+  
+    .portfolio-item {
+      position: relative;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      max-width: 100%;
+      width: 100%;
+      height: 100%;
+      max-height: 100%;
+    }
 
-.portfolio-item {
-  position: relative;
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
-
-.portfolio-item a {
-  position: relative;
-  z-index: 10;
-}
-
-.portfolio-item img {
-  width: 100%;
-  height: 100%;
-  transition: transform 0.3s ease;
-  padding-left: 0px;
-}
-
-.portfolio-item:hover img {
-  transform: scale(1.1);
-}
-
-.portfolio-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(52, 152, 219, 0.9);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.portfolio-item:hover .portfolio-overlay {
-  opacity: 1;
-}
-
-.portfolio-overlay h3 {
-  margin: 0;
-  color: #fff;
-}
-
-.portfolio-overlay p {
-  color: #fff;
-  text-align: center;
-}
+    .portfolio-item a {
+      position: relative;
+      z-index: 10;
+    }
+  
+    .portfolio-item img {
+      width: 100%;
+      height: 100%;
+      transition: transform 0.3s ease;
+      padding-left: 0px;
+    }
+  
+    .portfolio-item:hover img {
+      transform: scale(1.1);
+    }
+  
+    .portfolio-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(52, 152, 219, 0.9);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+  
+    .portfolio-item:hover .portfolio-overlay {
+      opacity: 1;
+    }
+  
+    .portfolio-overlay h3 {
+      margin: 0;
+      color: #fff;
+    }
+  
+    .portfolio-overlay p {
+      color: #fff;
+      text-align: center;
+    }
+  
 
 
     .gallery-container {
