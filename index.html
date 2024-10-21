@@ -4,7 +4,7 @@
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>FN-Services - Développement Web Professionnel</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-       @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap');
     
     :root {
       --primary-color: #3498db;
@@ -250,8 +250,8 @@ to {
 
   img {
     padding-left: 8%;
-    -webkit-transform: translate3d(0, 0, 0); /* Optimisation pour iOS Safari */
-    transform: translate3d(0, 0, 0); /* Version standard pour compatibilité générale */
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
@@ -279,8 +279,8 @@ to {
   .hero-image img {
     width: 80%;
     height: auto;
-    -webkit-transform: translate3d(0, 0, 0); /* Optimisation pour iOS Safari */
-    transform: translate3d(0, 0, 0); /* Version standard pour compatibilité générale */
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
   }
 
   .cta-button {
@@ -298,6 +298,13 @@ to {
 
   .portfolio-grid {
     grid-template-columns: 1fr;
+  }
+
+  .portfolio-item {
+    aspect-ratio: 4 / 3; /* Maintenir un bon ratio d'aspect pour Safari */
+    max-width: 90vw; /* Limiter la largeur pour éviter les étirements */
+    height: auto;
+    margin: 0 auto;
   }
 
   .services-grid {
@@ -329,7 +336,15 @@ to {
   .section {
     padding: 1.5rem;
   }
+
+  .portfolio-item {
+    aspect-ratio: 4 / 3;
+    max-width: 90vw;
+    height: auto;
+    margin: 0 auto;
+  }
 }
+
 
 
     /* Styles pour la section .hero */
@@ -1375,6 +1390,9 @@ padding-left:0px;
   margin-right:-40px;
 }
 }
+
+
+
 
 
 
