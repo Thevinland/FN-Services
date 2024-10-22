@@ -933,7 +933,7 @@ to {
   }
 
   .about-model {
-    width: 40%; /* Réduit la largeur par rapport à son conteneur */
+    width: 200px; /* Réduit la largeur par rapport à son conteneur */
   max-width: 1200px; /* Limite la largeur maximale à 600px */
   height: 250px; /* Réduit la hauteur à 300px */
   margin: 0 auto; /* Centre toujours le modèle */
@@ -955,9 +955,9 @@ to {
     margin-bottom: 1.5rem;
     display: flex;
     align-items: center;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: #2c3e50;
-    font-weight: 500;
+    font-weight: 400;
   }
 
   .about-features i {
@@ -1022,38 +1022,19 @@ to {
     font-family: 'Poppins', sans-serif;
   }
 
-  #about h2::after {
-    content: '';
-    display: block;
-    width: 70px;
-    height: 4px;
-    background-color: #3498db;
-    margin: 1.5rem auto;
-    border-radius: 2px;
-    animation: pulse 1.5s infinite;
-  }
-
+  
 
 #about h2 {
-  font-size: 3rem; /* Taille plus grande pour attirer l'attention */
+  font-size: 1.5rem; /* Taille plus grande pour attirer l'attention */
   margin-bottom: 2.5rem;
   color: #2c3e50;
   text-align: center;
   position: relative;
-  font-weight: bold;
-  font-family: 'Poppins', sans-serif; /* Typographie moderne et élégante */
+  
+ 
 }
 
-#about h2::after {
-  content: '';
-  display: block;
-  width: 70px;
-  height: 4px;
-  background-color: #3498db;
-  margin: 1.5rem auto;
-  border-radius: 2px;
-  animation: pulse 1.5s infinite; /* Légère animation d'impulsion pour l'effet stylé */
-}
+
 
 #about .about-text p {
   font-size: 1.3rem;
@@ -1061,7 +1042,13 @@ to {
   color: #555;
   margin-bottom: 1.5rem;
   font-family: 'Open Sans', sans-serif; /* Amélioration de la lisibilité */
+  text-align: justify
 }
+ /***
+  *? Code pour justifier le texte de la liste de la section about
+  ***/
+
+ 
 
     @media screen and (max-width: 768px) {
       .about-content {
@@ -1079,6 +1066,22 @@ to {
         order: -1;
         height: 300px;
       }
+
+      .about-features{
+        margin-left : -65px;
+        margin-right: -65px;
+      }
+
+      .about-text ul {
+    text-align: justify;
+    
+  }
+  .about-text p {
+    margin-left: -60px;
+    margin-right: -60px;
+  }
+ 
+ 
      
     }
   
@@ -1135,10 +1138,6 @@ body.dark-mode #about h2 {
 color: white;
 }
 
-body.dark-mode #about h2::after {
-background-color: #3498db;
-animation: pulse-dark 1.5s infinite;
-}
 
 /* Ajustements des paragraphes et texte */
 body.dark-mode #about .about-text p {
@@ -1214,7 +1213,7 @@ width: 75%;
 }
 .about-model {
 margin :0;
-width: 500px;
+width: 200px;
 height: 200px;
 }
 
@@ -1293,12 +1292,41 @@ height: 200px;
   }
 #about {
 padding-right: 32px;
-padding-left:0px;
+padding-left:20px;
 }
-.about-text p {
-  margin-left: -40px;
-  margin-right:-40px;
+
+  .about-text p {
+    margin-left: -60px;
+    margin-right: -60px;
+  }
 }
+@media (min-width:370px) and (max-width:389px){
+  .about-text p {
+    margin-left: -20px;
+    margin-right: -20px;
+  }
+  .about-features{
+        margin-left : -55px;
+        margin-right: -55px;
+      }
+
+}
+@media (max-width: 360px){
+
+  .about-text p {
+    margin-left: -25px;
+    margin-right: -25px;
+  }
+
+  .about-features{
+        margin-left : -45px;
+        margin-right: -45px;
+      }
+      #about {
+        padding-right: 45px;
+        padding-left: 10px;
+
+      }
 }
 
 /*
@@ -1508,7 +1536,8 @@ padding-left:0px;
     }
   }
 
-  
+
+ 
 
 
 
@@ -1925,10 +1954,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
-
-  
-
-     
 
     </body>
 </html>
