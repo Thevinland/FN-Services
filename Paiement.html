@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Paiement</title>
+</head>
+<body>
+
+<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+<script>
+  // Sandbox mode
+  Paddle.Environment.set("sandbox");
+  Paddle.Initialize({ token: "test_8675fda9a392a2925320d4498e8" });
+
+  // Récupère le txn depuis l'URL (?_ptxn=txn_xxx)
+  const params = new URLSearchParams(window.location.search);
+  const txn = params.get("_ptxn");
+
+  if (txn) {
+    Paddle.Checkout.open({
+      transactionId: txn,
+    });
+  }
+</script>
+
+</body>
+</html>
