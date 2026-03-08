@@ -2,17 +2,26 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>paiement</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paiement</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      background: #000; 
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
 </head>
 <body>
 
 <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
 <script>
-  // Sandbox mode
   Paddle.Environment.set("sandbox");
   Paddle.Initialize({ token: "test_8675fda9a392a2925320d4498e8" });
 
-  // Récupère le txn depuis l'URL (?_ptxn=txn_xxx)
   const params = new URLSearchParams(window.location.search);
   const txn = params.get("_ptxn");
 
